@@ -31,6 +31,7 @@ embed_dim = 128
 lstm_out = 196
 
 # train LSTM
+print("learn")
 model = Sequential()
 model.add(Embedding(max_features, embed_dim,input_length = X.shape[1]))
 model.add(SpatialDropout1D(0.4))
@@ -44,7 +45,8 @@ Y = pd.get_dummies(data['Insult']).values
 batch_size = 32
 model.fit(X, Y, epochs = 7, batch_size=batch_size, verbose = 2)
 
-validation_data = pd.read_csv('test.csv',header=0, encoding = "utf-8")
+print("test the model")
+validation_data = pd.read_csv('test_with_solutions.csv',header=0, encoding = "utf-8")
 
 # print(data)
 validation_data = validation_data[['Insult','Comment']]
@@ -55,10 +57,23 @@ max_features = 2000
 tokenizer = Tokenizer(num_words=max_features, split=' ')
 tokenizer.fit_on_texts(validation_data['Comment'].values)
 X_validate = tokenizer.texts_to_sequences(validation_data['Comment'].values)
-X_validate = pad_sequences(X_validate)
+X_validate = pad_sequences(X_validate, maxlen=1689)
 Y_validate = pd.get_dummies(validation_data['Insult']).values
 
 
 score,acc = model.evaluate(X_validate, Y_validate, verbose = 2, batch_size = batch_size)
 print("score: %.2f" % (score))
 print("acc: %.2f" % (acc))
+
+while(True):
+    twt = raw_input("Enter the statement that you want to analyse for insults")
+    #vectorizing the tweet by the pre-fitted tokenizer instance
+    twt = tokenizer.texts_to_sequences(twt)
+    #padding the tweet to have exactly the same shape as `embedding_2` input
+    twt = pad_sequences(twt, maxlen=1689, dtype='int32', value=0)
+    print(twt)
+    sentiment = model.predict(twt,batch_size=1,verbose = 2)[0]
+    if(np.argmax(sentiment) == 0):
+        print("Insult")
+    elif (np.argmax(sentiment) == 1):
+        print("Not an Insult")
