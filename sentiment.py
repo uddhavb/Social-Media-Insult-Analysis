@@ -11,17 +11,6 @@ from keras.models import model_from_json
 from keras.utils.np_utils import to_categorical
 import re
 
-'''
-
-REMOVE STOP WORDS
-
-CHECK IF PROPER NOUN
-
-
-
-
-
-'''
 data = pd.read_csv('train.csv',header=0, encoding = "utf-8")
 # print(data)
 data = data[['Insult','Comment']]
@@ -76,6 +65,13 @@ if inp == "Y":
     validation_data = validation_data[['Insult','Comment']]
     validation_data['Comment'] = validation_data['Comment'].apply(lambda x: x.lower())
     validation_data['Comment'] = validation_data['Comment'].apply((lambda x: re.sub('[^a-zA-z0-9\s]','',x)))
+    for index,sentence in enumerate(validation_data['Comment']):
+        tagged_sent = pos_tag(sentence.split())
+        new_sent = []
+        for word in tagged_sent:
+            if word[1] != "DT":
+                new_sent.append(word[0])
+        validation_data['Comment'][index] = ' '.join(word for word in new_sent)
 
     max_features = 2000
     tokenizer = Tokenizer(num_words=max_features, split=' ')
@@ -100,6 +96,12 @@ print(model.summary())
 
 while(True):
     twt = input("Enter the statement that you want to analyse for insults")
+    tagged_sent = pos_tag(twt.split())
+    new_sent = []
+    for word in tagged_sent:
+        if word[1] != "DT":
+            new_sent.append(word[0])
+    twt = ' '.join(word for word in new_sent)
     #vectorizing the tweet by the pre-fitted tokenizer instance
     twt = tokenizer.texts_to_sequences(twt)
     #padding the tweet to have exactly the same shape as `embedding_2` input
