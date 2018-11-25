@@ -40,7 +40,7 @@ print(X)
 embed_dim = 128
 lstm_out = 196
 
-inp = input("Train model? Y/N")
+inp = input("Train model? Y/N : ")
 
 if inp == "Y":
     # train LSTM
@@ -96,25 +96,27 @@ print(model.summary())
 
 
 while(True):
-    text = input("Enter the statement that you want to analyse for insults")
+    text = input("Enter the statement that you want to analyse for insults : ")
     text = text.lower()
     text = re.sub(r'[^a-zA-z0-9\s]','',text)
     print(text)
     tagged_sent = text.split()
     new_sent = []
     for word in tagged_sent:
-        if word[0] not in stopwords_set:
-            new_sent.append(word[0])
+        if word not in stopwords_set:
+            new_sent.append(word)
     text = ' '.join(word for word in new_sent)
     if len(text) == 0:
-        print("Not an Insult")
+        print("---------------Not an Insult")
     else:
         #vectorizing the tweet by the pre-fitted tokenizer instance
         text = tokenizer.texts_to_sequences(text)
         #padding the tweet to have exactly the same shape as `embedding_2` input
         text = pad_sequences(text, maxlen=898, dtype='int32', value=0)
         # print(text)
-        sentiment = model.predict(text,batch_size=1,verbose = 2)[0]
+        sentiment = model.predict(text,batch_size=1,verbose = 2)
+        print(sentiment)
+        sentiment = sentiment[0]
         if(np.argmax(sentiment) == 1):
             print("Insult")
         elif (np.argmax(sentiment) == 0):
