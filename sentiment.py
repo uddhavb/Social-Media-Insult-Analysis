@@ -12,19 +12,19 @@ from keras.utils.np_utils import to_categorical
 from nltk.corpus import stopwords
 import re
 stopwords_set = set(stopwords.words("english"))
-data = pd.read_csv('train.csv',header=0, encoding = "utf-8")
+data = pd.read_csv('new_train.csv',header=0, encoding = "utf-8")
 # print(data)
 data = data[['Insult','Comment']]
 data['Comment'] = data['Comment'].apply(lambda x: x.lower())
 data['Comment'] = data['Comment'].apply((lambda x: re.sub('[^a-zA-z0-9\s]','',x)))
-from nltk.tag import pos_tag
-for index,sentence in enumerate(data['Comment']):
-    tagged_sent = pos_tag(sentence.split())
-    new_sent = []
-    for word in tagged_sent:
-        if word[0] not in stopwords_set:
-            new_sent.append(word[0])
-    data['Comment'][index] = ' '.join(word for word in new_sent)
+# from nltk.tag import pos_tag
+# for index,sentence in enumerate(data['Comment']):
+#     tagged_sent = pos_tag(sentence.split())
+#     new_sent = []
+#     for word in tagged_sent:
+#         if word[0] not in stopwords_set:
+#             new_sent.append(word[0])
+#     data['Comment'][index] = ' '.join(word for word in new_sent)
 
 print(data[ data['Insult'] == 1].size)
 print(data[ data['Insult'] == 0].size)
@@ -60,25 +60,25 @@ if inp == "Y":
         f.write(model.to_json())
 
     print("test the model")
-    validation_data = pd.read_csv('test_with_solutions.csv',header=0, encoding = "utf-8")
+    validation_data = pd.read_csv('new_test_with_solutions.csv',header=0, encoding = "utf-8")
 
     # print(data)
     validation_data = validation_data[['Insult','Comment']]
     validation_data['Comment'] = validation_data['Comment'].apply(lambda x: x.lower())
     validation_data['Comment'] = validation_data['Comment'].apply((lambda x: re.sub('[^a-zA-z0-9\s]','',x)))
-    for index,sentence in enumerate(validation_data['Comment']):
-        tagged_sent = pos_tag(sentence.split())
-        new_sent = []
-        for word in tagged_sent:
-            if word[0] not in stopwords_set:
-                new_sent.append(word[0])
-        validation_data['Comment'][index] = ' '.join(word for word in new_sent)
+    # for index,sentence in enumerate(validation_data['Comment']):
+    #     tagged_sent = pos_tag(sentence.split())
+    #     new_sent = []
+    #     for word in tagged_sent:
+    #         if word[0] not in stopwords_set:
+    #             new_sent.append(word[0])
+    #     validation_data['Comment'][index] = ' '.join(word for word in new_sent)
 
     max_features = 2000
     tokenizer = Tokenizer(num_words=max_features, split=' ')
     tokenizer.fit_on_texts(validation_data['Comment'].values)
     X_validate = tokenizer.texts_to_sequences(validation_data['Comment'].values)
-    X_validate = pad_sequences(X_validate, maxlen=1689)
+    X_validate = pad_sequences(X_validate, maxlen=898)
     Y_validate = pd.get_dummies(validation_data['Insult']).values
     score,acc = model.evaluate(X_validate, Y_validate, verbose = 2, batch_size = batch_size)
     print("score: %.2f" % (score))
@@ -97,21 +97,25 @@ print(model.summary())
 
 while(True):
     text = input("Enter the statement that you want to analyse for insults")
-    text = text.apply(lambda x: x.lower())
-    text = text.apply((lambda x: re.sub('[^a-zA-z0-9\s]','',x)))
-    tagged_sent = pos_tag(text.split())
+    text = text.lower()
+    text = re.sub(r'[^a-zA-z0-9\s]','',text)
+    print(text)
+    tagged_sent = text.split()
     new_sent = []
     for word in tagged_sent:
         if word[0] not in stopwords_set:
             new_sent.append(word[0])
     text = ' '.join(word for word in new_sent)
-    #vectorizing the tweet by the pre-fitted tokenizer instance
-    text = tokenizer.texts_to_sequences(text)
-    #padding the tweet to have exactly the same shape as `embedding_2` input
-    text = pad_sequences(text, maxlen=1689, dtype='int32', value=0)
-    print(text)
-    sentiment = model.predict(text,batch_size=1,verbose = 2)[0]
-    if(np.argmax(sentiment) == 1):
-        print("Insult")
-    elif (np.argmax(sentiment) == 0):
+    if len(text) == 0:
         print("Not an Insult")
+    else:
+        #vectorizing the tweet by the pre-fitted tokenizer instance
+        text = tokenizer.texts_to_sequences(text)
+        #padding the tweet to have exactly the same shape as `embedding_2` input
+        text = pad_sequences(text, maxlen=898, dtype='int32', value=0)
+        # print(text)
+        sentiment = model.predict(text,batch_size=1,verbose = 2)[0]
+        if(np.argmax(sentiment) == 1):
+            print("Insult")
+        elif (np.argmax(sentiment) == 0):
+            print("Not an Insult")
