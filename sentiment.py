@@ -9,8 +9,9 @@ from keras.layers import Dense, Embedding, LSTM, SpatialDropout1D
 from sklearn.model_selection import train_test_split
 from keras.models import model_from_json
 from keras.utils.np_utils import to_categorical
+from nltk.corpus import stopwords
 import re
-
+stopwords_set = set(stopwords.words("english"))
 data = pd.read_csv('train.csv',header=0, encoding = "utf-8")
 # print(data)
 data = data[['Insult','Comment']]
@@ -21,7 +22,7 @@ for index,sentence in enumerate(data['Comment']):
     tagged_sent = pos_tag(sentence.split())
     new_sent = []
     for word in tagged_sent:
-        if word[1] != "DT":
+        if word[0] not in stopwords_set:
             new_sent.append(word[0])
     data['Comment'][index] = ' '.join(word for word in new_sent)
 
@@ -69,7 +70,7 @@ if inp == "Y":
         tagged_sent = pos_tag(sentence.split())
         new_sent = []
         for word in tagged_sent:
-            if word[1] != "DT":
+            if word[0] not in stopwords_set:
                 new_sent.append(word[0])
         validation_data['Comment'][index] = ' '.join(word for word in new_sent)
 
@@ -95,19 +96,21 @@ print(model.summary())
 
 
 while(True):
-    twt = input("Enter the statement that you want to analyse for insults")
-    tagged_sent = pos_tag(twt.split())
+    text = input("Enter the statement that you want to analyse for insults")
+    text = text.apply(lambda x: x.lower())
+    text = text.apply((lambda x: re.sub('[^a-zA-z0-9\s]','',x)))
+    tagged_sent = pos_tag(text.split())
     new_sent = []
     for word in tagged_sent:
-        if word[1] != "DT":
+        if word[0] not in stopwords_set:
             new_sent.append(word[0])
-    twt = ' '.join(word for word in new_sent)
+    text = ' '.join(word for word in new_sent)
     #vectorizing the tweet by the pre-fitted tokenizer instance
-    twt = tokenizer.texts_to_sequences(twt)
+    text = tokenizer.texts_to_sequences(text)
     #padding the tweet to have exactly the same shape as `embedding_2` input
-    twt = pad_sequences(twt, maxlen=1689, dtype='int32', value=0)
-    print(twt)
-    sentiment = model.predict(twt,batch_size=1,verbose = 2)[0]
+    text = pad_sequences(text, maxlen=1689, dtype='int32', value=0)
+    print(text)
+    sentiment = model.predict(text,batch_size=1,verbose = 2)[0]
     if(np.argmax(sentiment) == 1):
         print("Insult")
     elif (np.argmax(sentiment) == 0):
