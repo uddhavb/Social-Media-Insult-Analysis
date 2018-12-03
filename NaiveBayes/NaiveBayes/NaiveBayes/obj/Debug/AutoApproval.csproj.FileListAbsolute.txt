@@ -1,0 +1,13 @@
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\bin\Debug\DefaultStopWords.txt
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\bin\Debug\AutoApproval.exe.config
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\bin\Debug\AutoApproval.exe
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\bin\Debug\AutoApproval.pdb
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\bin\Debug\NClassifier.dll
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\bin\Debug\NRakeCore.dll
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\bin\Debug\NClassifier.pdb
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\bin\Debug\NRakeCore.pdb
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\obj\Debug\AutoApproval.csprojAssemblyReference.cache
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\obj\Debug\AutoApproval.csproj.CoreCompileInputs.cache
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\obj\Debug\AutoApproval.csproj.CopyComplete
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\obj\Debug\AutoApproval.exe
+E:\Documents\Social Computing\Project\AutoApproval\AutoApproval\AutoApproval\obj\Debug\AutoApproval.pdb

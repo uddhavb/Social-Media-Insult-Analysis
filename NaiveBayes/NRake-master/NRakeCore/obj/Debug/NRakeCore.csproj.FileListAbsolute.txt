@@ -1,0 +1,6 @@
+E:\Documents\Social Computing\Project\AutoApproval\NRake-master\NRake-master\NRakeCore\bin\Debug\NRakeCore.dll
+E:\Documents\Social Computing\Project\AutoApproval\NRake-master\NRake-master\NRakeCore\bin\Debug\NRakeCore.pdb
+E:\Documents\Social Computing\Project\AutoApproval\NRake-master\NRake-master\NRakeCore\obj\Debug\NRakeCore.csprojAssemblyReference.cache
+E:\Documents\Social Computing\Project\AutoApproval\NRake-master\NRake-master\NRakeCore\obj\Debug\NRakeCore.csproj.CoreCompileInputs.cache
+E:\Documents\Social Computing\Project\AutoApproval\NRake-master\NRake-master\NRakeCore\obj\Debug\NRakeCore.dll
+E:\Documents\Social Computing\Project\AutoApproval\NRake-master\NRake-master\NRakeCore\obj\Debug\NRakeCore.pdb
