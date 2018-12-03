@@ -1,7 +1,0 @@
-E:\Documents\Social Computing\Project\AutoApproval\NClassifier-master\NClassifier-master\src\NClassifier\bin\Debug\DefaultStopWords.txt
-E:\Documents\Social Computing\Project\AutoApproval\NClassifier-master\NClassifier-master\src\NClassifier\bin\Debug\NClassifier.dll
-E:\Documents\Social Computing\Project\AutoApproval\NClassifier-master\NClassifier-master\src\NClassifier\bin\Debug\NClassifier.pdb
-E:\Documents\Social Computing\Project\AutoApproval\NClassifier-master\NClassifier-master\src\NClassifier\obj\Debug\NClassifier.csprojAssemblyReference.cache
-E:\Documents\Social Computing\Project\AutoApproval\NClassifier-master\NClassifier-master\src\NClassifier\obj\Debug\NClassifier.csproj.CoreCompileInputs.cache
-E:\Documents\Social Computing\Project\AutoApproval\NClassifier-master\NClassifier-master\src\NClassifier\obj\Debug\NClassifier.dll
-E:\Documents\Social Computing\Project\AutoApproval\NClassifier-master\NClassifier-master\src\NClassifier\obj\Debug\NClassifier.pdb
