@@ -14,3 +14,5 @@ Using this processed data we are passing it into the training algorithm to fit t
 We initially started this project with Naive Bayes Text Classification algorithm in .NET. 
 
 It uses the the open source programs [NClassifier] (https://github.com/azybler/nclassifier/tree/master/NClassifier) and [NRake] (https://github.com/colefichter/NRake)
+
+However, it did not perform well and the acccuracy was low.
